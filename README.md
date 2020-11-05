@@ -1,2 +1,2 @@
 # PatreonPlugin
-A small port of DankRushen/PatreonPlugin for EXILED v2 Servers.
+A small port of Dankrushen/PatreonPlugin for EXILED v2 Servers.
