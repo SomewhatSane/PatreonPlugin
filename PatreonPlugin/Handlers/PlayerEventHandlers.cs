@@ -15,14 +15,19 @@ namespace PatreonPlugin.Handlers
             //If they are a patreon.
             if (Plugin.PatreonConfig.Patreons.ContainsKey(ev.Player.UserId))
             {
-                string RankName = Plugin.PatreonConfig.Patreons[ev.Player.UserId];
+                string RankName = Plugin.PatreonConfig.Patreons[ev.Player.UserId].RankName;
                 
                 //If the rank given actually exists.
                 if (Plugin.PatreonConfig.PatreonRanks.ContainsKey(RankName))
                 {
-                    //Give ranks.
-                    ev.Player.RankName = Plugin.PatreonConfig.PatreonRanks[RankName].Tag;
-                    ev.Player.RankColor = Plugin.PatreonConfig.PatreonRanks[RankName].TagColour;
+
+                    if (ev.Player.RankName == null || Plugin.PatreonConfig.Patreons[ev.Player.UserId].OverrideRATag) //Make sure OverrideRATag is not true if we give the player a rank name and colour.
+                    {
+                        ev.Player.RankName = Plugin.PatreonConfig.PatreonRanks[RankName].Tag;
+                        ev.Player.RankColor = Plugin.PatreonConfig.PatreonRanks[RankName].TagColour;
+                    }
+                   
+                    
 
                     if (Plugin.PatreonConfig.PatreonRanks[RankName].AutoReserve && !ReservedSlot.HasReservedSlot(ev.Player.UserId))
                     {
@@ -52,7 +57,7 @@ namespace PatreonPlugin.Handlers
                 //If they are a patreon.
                 if (Plugin.PatreonConfig.Patreons.ContainsKey(ev.Player.UserId))
                 {
-                    string RankName = Plugin.PatreonConfig.Patreons[ev.Player.UserId];
+                    string RankName = Plugin.PatreonConfig.Patreons[ev.Player.UserId].RankName;
                     //See if the rank actually exists.
                     if (Plugin.PatreonConfig.PatreonRanks.ContainsKey(RankName))
                        Timing.CallDelayed(1f, () => ItemManager.GiveItems(ev.Player, Plugin.PatreonConfig.PatreonRanks[RankName].ExtraItems[ItemManager.RoleToString(ev.Player.Role)]));

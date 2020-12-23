@@ -10,10 +10,10 @@ namespace PatreonPlugin
             {"Default", new PatreonRank{Tag = "Default Tag", TagColour = "pumpkin", AutoReserve = false} },
             {"MegaDonator", new PatreonRank{Tag = "Mega Donator", TagColour = "red", AutoReserve = true} }
         };
-        public Dictionary<string, string> Patreons { get; set; } = new Dictionary<string, string>()
+        public Dictionary<string, Patreon> Patreons { get; set; } = new Dictionary<string, Patreon>()
         {
-            {"SomeUserIdHere@steam", "Default" },
-            {"AnotherUserIdHere@discord", "MegaDonator" }
+            {"SomeUserIdHere@steam", new Patreon{RankName = "Default", OverrideRATag = false } },
+            {"AnotherUserIdHere@discord", new Patreon{RankName = "MegaDonator", OverrideRATag = false} }
         };
     }
 
@@ -29,5 +29,11 @@ namespace PatreonPlugin
         };
 
         public bool AutoReserve { get; set; }
+    }
+
+    public class Patreon
+    {
+        public string RankName { get; set; }
+        public bool OverrideRATag { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace PatreonPlugin.Commands
     public class ManagePatreonSupporters : ICommand
     {
         public string Command { get; } = "patreon";
-        public string[] Aliases { get; } = { "pi" };
+        public string[] Aliases { get; } = { "pp" };
 
         public string Description { get; } = "Manage Patreon supporters.";
 
@@ -20,6 +20,9 @@ namespace PatreonPlugin.Commands
         {
             string UserId;
             string RankName;
+            bool OverrideRATag;
+            bool Overwrite = false;
+            string OverwriteRankName = null;
 
             if (Sender is PlayerCommandSender Player)
             {
@@ -43,9 +46,9 @@ namespace PatreonPlugin.Commands
 
                     //Check to make sure all parameters are there.
 
-                    if (Arguments.Array.Length != 4)
+                    if (Arguments.Array.Length < 5)
                     {
-                        Response = "Some required parameters are missing. To add a patreon rank, use PATREON ADD SomeUserIDHere@steam SomeRankNameHere";
+                        Response = "Some required parameters are missing. To add a patreon rank, use PATREON ADD SomeUserIDHere@steam SomeRankNameHere OverrideRATag";
                         return false;
                     }
                     
@@ -61,9 +64,10 @@ namespace PatreonPlugin.Commands
 
                     catch(Exception ex)
                     {
-                        Response = $"An exception when trying to parse argument 3 (UserId). Exception: {ex}";
+                        Response = $"An exception occurred when trying to parse argument 3 (UserId). Is it correct? Exception: {ex}";
                         return false;
                     }
+
 
                     RankName = Arguments.Array[3];
 
@@ -71,32 +75,49 @@ namespace PatreonPlugin.Commands
 
                     if (Plugin.PatreonConfig.Patreons.ContainsKey(UserId))
                     {
-                        Response = $"{Arguments.Array[2]} already has a patreon rank {Plugin.PatreonConfig.Patreons[Arguments.Array[3].ToLower()]}";
-                        return false;
+                        Overwrite = true;
+                        OverwriteRankName = Plugin.PatreonConfig.Patreons[UserId].RankName;
+                        Plugin.PatreonConfig.Patreons.Remove(UserId);
                     }
 
                     //Check to see if the rank that they want to add actually exists.
 
-                    if (Plugin.PatreonConfig.PatreonRanks[RankName] == null)
+                    if (!Plugin.PatreonConfig.PatreonRanks.ContainsKey(RankName))
                     {
-                        Response = $"The rank {RankName} does not exist.";
+                        Response = $"The rank '{RankName}' does not exist.";
+                        return false;
+                    }
+
+                    //Try to parse OverrideRATag
+                    try
+                    {
+                        OverrideRATag = Boolean.Parse(Arguments.Array[4]);
+                    }
+
+                    catch (Exception ex)
+                    {
+                        Response = $"An exception occurred when trying to parse argument 5 (OverrideRATag). Is the input valid? Exception: {ex}";
                         return false;
                     }
 
                     //All tests pass. Add the role and reserialise.
 
-                    Plugin.PatreonConfig.Patreons.Add(UserId, RankName);
+                    Plugin.PatreonConfig.Patreons.Add(UserId, new Patreon {RankName = RankName, OverrideRATag = OverrideRATag});
 
                     Log.Info("A patreon has been added. Saving configuration...");
                     Plugin.SavePatreonConfig();
 
-                    Response = $"Given {UserId} the patreon rank {RankName}.";
+                    if (Overwrite)
+                        Response = $"{UserId}'s old rank of '{OverwriteRankName}' was removed and '{RankName}' was given.";
+                    else
+                        Response = $"Given {UserId} the patreon rank '{RankName}'.";
+
                     return true;
 
                 case "REMOVE":
                 case "DELETE":
 
-                    if (Arguments.Array.Length != 3)
+                    if (Arguments.Array.Length < 3)
                     {
                         Response = "Some required parameters are missing. To delete / remove a patreon rank, use PATREON DELETE SomeUserIDHere@steam";
                         return false;
@@ -114,7 +135,7 @@ namespace PatreonPlugin.Commands
 
                     catch (Exception ex)
                     {
-                        Response = $"An exception when trying to parse argument 3 (UserId). Exception: {ex}";
+                        Response = $"An exception when trying to parse argument 3 (UserId) Is it correct? Exception: {ex}";
                         return false;
                     }
 

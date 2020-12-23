@@ -14,10 +14,10 @@ namespace PatreonPlugin
         public override string Name { get; } = "PatreonPlugin";
         public override string Author { get; } = "Kat";
         public override string Prefix { get; } = "pp";
-        public override Version RequiredExiledVersion { get; } = new Version("2.1.11");
+        public override Version RequiredExiledVersion { get; } = new Version("2.1.21");
 
-        internal const string version = "1.0";
-        internal const string LastModified = "2020/11/05 17:21 UTC";
+        internal const string version = "1.1";
+        internal const string LastModified = "2020/12/23 16:21 UTC";
 
         public static PatreonConfig PatreonConfig;
         private UpdateChecker UpdateChecker;
@@ -90,9 +90,6 @@ namespace PatreonPlugin
 
             Log.Info("Disabled.");
         }
-
-
-
 
         public static PatreonConfig LoadPatreonConfig()
         {
