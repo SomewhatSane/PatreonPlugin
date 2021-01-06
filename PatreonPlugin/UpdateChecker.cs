@@ -22,7 +22,7 @@ namespace PatreonPlugin
                     return;
                 }
 
-                string[] Response = ResponseMessage.Content.ReadAsStringAsync().Result.Split('/');
+                string[] Response = ResponseMessage.Content.ReadAsStringAsync().Result.Split(';');
 
                 if (Response[0] == Plugin.version)
                     Log.Info($"You are running the latest version of {plugin.Name}");

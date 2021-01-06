@@ -14,10 +14,10 @@ namespace PatreonPlugin
         public override string Name { get; } = "PatreonPlugin";
         public override string Author { get; } = "Kat";
         public override string Prefix { get; } = "pp";
-        public override Version RequiredExiledVersion { get; } = new Version("2.1.21");
+        public override Version RequiredExiledVersion { get; } = new Version("2.1.23");
 
-        internal const string version = "1.1";
-        internal const string LastModified = "2020/12/23 16:21 UTC";
+        internal const string version = "1.1.1";
+        internal const string LastModified = "2021/01/06 22:19 UTC";
 
         public static PatreonConfig PatreonConfig;
         private UpdateChecker UpdateChecker;
