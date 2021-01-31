@@ -12,12 +12,12 @@ namespace PatreonPlugin
     public class Plugin : Plugin<Config>
     {
         public override string Name { get; } = "PatreonPlugin";
-        public override string Author { get; } = "Kat";
+        public override string Author { get; } = "Kat (AKA SomewhatSane)";
         public override string Prefix { get; } = "pp";
-        public override Version RequiredExiledVersion { get; } = new Version("2.1.23");
+        public override Version RequiredExiledVersion { get; } = new Version("2.1.29");
 
-        internal const string version = "1.1.1";
-        internal const string LastModified = "2021/01/06 22:19 UTC";
+        internal const string version = "1.1.2";
+        internal const string LastModified = "2021/01/31 13:26 UTC";
 
         public static PatreonConfig PatreonConfig;
         private UpdateChecker UpdateChecker;
@@ -71,7 +71,7 @@ namespace PatreonPlugin
             Log.Info("Registering Event Handlers.");
 
             PlayerEventHandlers = new PlayerEventHandlers(this);
-            PlayerEvents.Joined += PlayerEventHandlers.Joined;
+            PlayerEvents.Verified += PlayerEventHandlers.Verified;
             PlayerEvents.Spawning += PlayerEventHandlers.Spawning;
 
 
@@ -82,7 +82,7 @@ namespace PatreonPlugin
         {
             if (!Config.IsEnabled) return;
 
-            PlayerEvents.Joined -= PlayerEventHandlers.Joined;
+            PlayerEvents.Verified -= PlayerEventHandlers.Verified;
             PlayerEvents.Spawning -= PlayerEventHandlers.Spawning;
             PlayerEventHandlers = null;
 

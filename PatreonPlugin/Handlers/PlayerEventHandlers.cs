@@ -10,7 +10,7 @@ namespace PatreonPlugin.Handlers
         private readonly Plugin plugin;
         public PlayerEventHandlers(Plugin plugin) => this.plugin = plugin;
 
-        public void Joined(JoinedEventArgs ev)
+        public void Verified(VerifiedEventArgs ev)
         {
             //If they are a patreon.
             if (Plugin.PatreonConfig.Patreons.ContainsKey(ev.Player.UserId))
