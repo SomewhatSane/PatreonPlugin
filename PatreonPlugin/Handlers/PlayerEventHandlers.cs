@@ -16,22 +16,20 @@ namespace PatreonPlugin.Handlers
             if (Plugin.PatreonConfig.Patreons.ContainsKey(ev.Player.UserId))
             {
                 string RankName = Plugin.PatreonConfig.Patreons[ev.Player.UserId].RankName;
-                
+
                 //If the rank given actually exists.
                 if (Plugin.PatreonConfig.PatreonRanks.ContainsKey(RankName))
                 {
 
-                    if (ev.Player.RankName == null || Plugin.PatreonConfig.Patreons[ev.Player.UserId].OverrideRATag) //Make sure OverrideRATag is not true if we give the player a rank name and colour.
+                    if (string.IsNullOrWhiteSpace(ev.Player.RankName) || Plugin.PatreonConfig.Patreons[ev.Player.UserId].OverrideRATag)
                     {
-                        ev.Player.RankName = Plugin.PatreonConfig.PatreonRanks[RankName].Tag;
-                        ev.Player.RankColor = Plugin.PatreonConfig.PatreonRanks[RankName].TagColour;
+                        //Needed to add this delay so that if the player should have a PatreonPlugin rank but also has a RA rank, the player will get the RA rank's tag first before we replace it with PatreonPlugin's.
+                        Timing.CallDelayed(1f, () => SetRank(ev.Player, Plugin.PatreonConfig.PatreonRanks[RankName].Tag, Plugin.PatreonConfig.PatreonRanks[RankName].TagColour));
                     }
-                   
-                    
 
                     if (Plugin.PatreonConfig.PatreonRanks[RankName].AutoReserve && !ReservedSlot.HasReservedSlot(ev.Player.UserId))
                     {
-                        Log.Info($"Adding reserved slot for {ev.Player.UserId} due to patreon rank auto reserve.");
+                        Log.Info($"Adding reserved slot for {ev.Player.UserId} due to patreon rank auto reserve flag.");
                         using (StreamWriter ReservedSlotWriter = File.AppendText(Plugin.ReservedSlotsFilePath))
                         {
                             ReservedSlotWriter.WriteLine($"#{ev.Player.Nickname} ({ev.Player.UserId}) - Patreon Rank: {RankName}.");
@@ -45,8 +43,6 @@ namespace PatreonPlugin.Handlers
 
                 else
                     Log.Warn($"{ev.Player.UserId} has been assigned a patreon rank that does not exist. Skipping.");
-
-
             }
         }
 
@@ -60,12 +56,22 @@ namespace PatreonPlugin.Handlers
                     string RankName = Plugin.PatreonConfig.Patreons[ev.Player.UserId].RankName;
                     //See if the rank actually exists.
                     if (Plugin.PatreonConfig.PatreonRanks.ContainsKey(RankName))
-                       Timing.CallDelayed(1f, () => ItemManager.GiveItems(ev.Player, Plugin.PatreonConfig.PatreonRanks[RankName].ExtraItems[ItemManager.RoleToString(ev.Player.Role)]));
+                       Timing.CallDelayed(1f, () => ItemManager.GiveItems(ev.Player, Plugin.PatreonConfig.PatreonRanks[RankName].ExtraItems[ev.Player.Role.ToString()]));
 
                     else
                         Log.Warn($"{ev.Player.UserId} has been assigned a patreon rank that does not exist. Skipping.");
                 }
+                else //If they are not a patreon, give the items in the None rank.
+                {
+                    Timing.CallDelayed(1f, () => ItemManager.GiveItems(ev.Player, Plugin.PatreonConfig.PatreonRanks["None"].ExtraItems[ev.Player.Role.ToString()]));
+                }
             }
+        }
+
+        private void SetRank(Player Player, string RankName, string RankColour)
+        {
+            Player.RankName = RankName;
+            Player.RankColor = RankColour;
         }
     }
 }

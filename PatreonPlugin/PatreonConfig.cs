@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace PatreonPlugin
 {
@@ -7,6 +6,7 @@ namespace PatreonPlugin
     {
         public Dictionary<string, PatreonRank> PatreonRanks { get; set; } = new Dictionary<string, PatreonRank>()
         {
+            {"None", new PatreonRank{Tag = "NOTUSED", TagColour="NOTUSED" } }, //Used for items only to allow servers not to be P2W.
             {"Default", new PatreonRank{Tag = "Default Tag", TagColour = "pumpkin", AutoReserve = false} },
             {"MegaDonator", new PatreonRank{Tag = "Mega Donator", TagColour = "red", AutoReserve = true} }
         };
@@ -24,8 +24,8 @@ namespace PatreonPlugin
 
         public Dictionary<string, List<string>> ExtraItems { get; set; } = new Dictionary<string, List<string>>()
         {
-            {"ClassD", new List<string>() {"Flashlight"} },
-            {"Scientist", new List<string>() {"Flashlight"} }
+            {"ClassD", new List<string> {"Flashlight:1"} },
+            {"Scientist", new List<string> {"Flashlight:1"} }
         };
 
         public bool AutoReserve { get; set; }

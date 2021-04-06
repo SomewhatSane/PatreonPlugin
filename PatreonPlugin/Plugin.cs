@@ -12,12 +12,12 @@ namespace PatreonPlugin
     public class Plugin : Plugin<Config>
     {
         public override string Name { get; } = "PatreonPlugin";
-        public override string Author { get; } = "Kat (AKA SomewhatSane)";
+        public override string Author { get; } = "SomewhatSane";
         public override string Prefix { get; } = "pp";
-        public override Version RequiredExiledVersion { get; } = new Version("2.1.29");
+        public override Version RequiredExiledVersion { get; } = new Version("2.8.0");
 
-        internal const string version = "1.1.2";
-        internal const string LastModified = "2021/01/31 13:26 UTC";
+        internal const string version = "1.2.1";
+        internal const string LastModified = "2021/03/28 18:50 UTC";
 
         public static PatreonConfig PatreonConfig;
         private UpdateChecker UpdateChecker;
@@ -32,7 +32,7 @@ namespace PatreonPlugin
             if (!Config.IsEnabled) return;
 
             Log.Info($"{Name} v{version} by {Author}. Last Modified: {LastModified}.");
-            Log.Info("Originally a port of DankRushen/PatreonPlugin on GitHub.");
+            Log.Info("Inspired by DankRushen/PatreonPlugin on GitHub.");
 
             Log.Info("Loading base scripts.");
             UpdateChecker = new UpdateChecker(this);
@@ -56,11 +56,19 @@ namespace PatreonPlugin
                     PatreonConfig = LoadPatreonConfig();
                 else
                 {
-                    Log.Info($"{ConfigurationFolderPath}/Configuration.json does not exist. Saving the defaults...");
-                    Log.Info("Change the configuration to suit your needs!!");
+                    Log.Info($"{ConfigurationFolderPath}Configuration.json does not exist. Saving the defaults...");
+                    Log.Info("Modify the configuration to suit your needs!!");
                     SavePatreonConfig();
+                    PatreonConfig = LoadPatreonConfig();
                 }
-                    
+
+                if (!PatreonConfig.PatreonRanks.ContainsKey("None"))
+                {
+                    //None does not exist. Init the defaults.
+                    Log.Warn("None Patreon rank does not exist. Using defaults.");
+                    PatreonConfig.PatreonRanks.Add("None", new PatreonRank());
+                }
+
             }
             
             catch(Exception ex)

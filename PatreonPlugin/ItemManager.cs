@@ -1,15 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Exiled.API.Features;
 
 namespace PatreonPlugin
 {
-    public class ItemManager
+    public static class ItemManager
     {
         public static void GiveItems(Player Player, List<string> Items)
         {
+            Random random = new Random();
             foreach (string Item in Items)
             {
-                Player.AddItem(ParseItem(Item));
+                string[] ItemArray = Item.Split(':');
+                int randomNumber = random.Next(0, 100);
+
+                try
+                {
+                    int chance = int.Parse(ItemArray[1]);
+                    if (randomNumber <= chance)
+                        Player.AddItem(ParseItem(ItemArray[0]));
+                }
+                catch
+                {
+                    Log.Error($"Cannot parse {ItemArray[1]}. {ItemArray[1]} is not a valid integer.");
+                }
             }
             
         }
@@ -95,54 +109,6 @@ namespace PatreonPlugin
                 default:
                     Log.Warn($"Unknown item ({Item}) passed to item parser. Returning none.");
                     return ItemType.None;
-            }
-        }
-
-        public static string RoleToString(RoleType Role)
-        {
-            switch (Role)
-            {
-                case RoleType.Scp173:
-                    return "Scp173";
-                case RoleType.Scp106:
-                    return "Scp106";
-                case RoleType.Scp049:
-                    return "Scp049";
-                case RoleType.Scp079:
-                    return "Scp079";
-                case RoleType.Scp096:
-                    return "Scp096";
-                case RoleType.Scp0492:
-                    return "Scp0492";
-                case RoleType.Scp93953:
-                    return "Scp93953";
-                case RoleType.Scp93989:
-                    return "Scp93989";
-                case RoleType.NtfScientist:
-                    return "NtfScientist";
-                case RoleType.ChaosInsurgency:
-                    return "ChaosInsurgency";
-                case RoleType.NtfLieutenant:
-                    return "NtfLieutenant";
-                case RoleType.NtfCommander:
-                    return "NtfCommander";
-                case RoleType.NtfCadet:
-                    return "NtfCadet";
-                case RoleType.FacilityGuard:
-                    return "FacilityGuard";
-                case RoleType.Scientist:
-                    return "Scientist";
-                case RoleType.ClassD:
-                    return "ClassD";
-                case RoleType.Spectator:
-                    return "Spectator";
-                case RoleType.Tutorial:
-                    return "Tutorial";
-                case RoleType.None:
-                    return "None";
-                default:
-                    Log.Info($"Unknown role {Role} passed to role parser. Returning None.");
-                    return "None";
             }
         }
     }

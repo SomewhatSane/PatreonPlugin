@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <ReleaseVersion>1.2.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,22 +43,22 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Exiled.API">
-      <HintPath>..\packages\EXILED.2.1.29\lib\net472\Exiled.API.dll</HintPath>
+      <HintPath>..\packages\EXILED.2.8.0\lib\net472\Exiled.API.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.Bootstrap">
-      <HintPath>..\packages\EXILED.2.1.29\lib\net472\Exiled.Bootstrap.dll</HintPath>
+      <HintPath>..\packages\EXILED.2.8.0\lib\net472\Exiled.Bootstrap.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.Events">
-      <HintPath>..\packages\EXILED.2.1.29\lib\net472\Exiled.Events.dll</HintPath>
+      <HintPath>..\packages\EXILED.2.8.0\lib\net472\Exiled.Events.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.Loader">
-      <HintPath>..\packages\EXILED.2.1.29\lib\net472\Exiled.Loader.dll</HintPath>
+      <HintPath>..\packages\EXILED.2.8.0\lib\net472\Exiled.Loader.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.Permissions">
-      <HintPath>..\packages\EXILED.2.1.29\lib\net472\Exiled.Permissions.dll</HintPath>
+      <HintPath>..\packages\EXILED.2.8.0\lib\net472\Exiled.Permissions.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.Updater">
-      <HintPath>..\packages\EXILED.2.1.29\lib\net472\Exiled.Updater.dll</HintPath>
+      <HintPath>..\packages\EXILED.2.8.0\lib\net472\Exiled.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\..\..\..\mnt\SEAGATE_2TB\SteamLibrary\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Assembly-CSharp.dll</HintPath>
@@ -76,6 +77,12 @@
     </Reference>
     <Reference Include="CommandSystem.Core">
       <HintPath>..\References\CommandSystem.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.CreditTags">
+      <HintPath>..\packages\EXILED.2.8.0\lib\net472\Exiled.CreditTags.dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.CustomItems">
+      <HintPath>..\packages\EXILED.2.8.0\lib\net472\Exiled.CustomItems.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
