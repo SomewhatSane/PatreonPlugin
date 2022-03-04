@@ -1,9 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using Exiled.API.Features;
 using PatreonPlugin.Handlers;
 using Utf8Json;
-using System.IO;
 using PlayerEvents = Exiled.Events.Handlers.Player;
 
 
@@ -14,22 +15,25 @@ namespace PatreonPlugin
         public override string Name { get; } = "PatreonPlugin";
         public override string Author { get; } = "SomewhatSane";
         public override string Prefix { get; } = "pp";
-        public override Version RequiredExiledVersion { get; } = new Version("2.8.0");
+        public override Version RequiredExiledVersion { get; } = new Version("5.0.0");
 
-        internal const string version = "1.2.1";
-        internal const string LastModified = "2021/03/28 18:50 UTC";
+        public static readonly string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+        internal const string LastModified = "2022/03/04 22:45 UTC";
 
         public static PatreonConfig PatreonConfig;
         private UpdateChecker UpdateChecker;
         private PlayerEventHandlers PlayerEventHandlers;
 
         private static readonly string ConfigurationFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EXILED/Plugins/PatreonPlugin/");
-        public static readonly string ReservedSlotsFilePath = GameCore.ConfigSharing.Paths[3] + "UserIDReservedSlots.txt";
+        public static readonly string ReservedSlotsFilePath = Path.Combine(GameCore.ConfigSharing.Paths[3], "UserIDReservedSlots.txt");
 
 
         public override void OnEnabled()
         {
             if (!Config.IsEnabled) return;
+
+            Log.Error(ReservedSlotsFilePath);
 
             Log.Info($"{Name} v{version} by {Author}. Last Modified: {LastModified}.");
             Log.Info("Inspired by DankRushen/PatreonPlugin on GitHub.");

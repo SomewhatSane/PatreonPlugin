@@ -1,4 +1,5 @@
-﻿using Exiled.Events.EventArgs;
+﻿using System;
+using Exiled.Events.EventArgs;
 using Exiled.API.Features;
 using System.IO;
 using MEC;
@@ -32,6 +33,8 @@ namespace PatreonPlugin.Handlers
                         Log.Info($"Adding reserved slot for {ev.Player.UserId} due to patreon rank auto reserve flag.");
                         using (StreamWriter ReservedSlotWriter = File.AppendText(Plugin.ReservedSlotsFilePath))
                         {
+                            if (!File.ReadAllText(Plugin.ReservedSlotsFilePath).EndsWith("\n", StringComparison.Ordinal))
+                                ReservedSlotWriter.Write("\n");
                             ReservedSlotWriter.WriteLine($"#{ev.Player.Nickname} ({ev.Player.UserId}) - Patreon Rank: {RankName}.");
                             ReservedSlotWriter.WriteLine(ev.Player.UserId);
                         }

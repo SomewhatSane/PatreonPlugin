@@ -30,6 +30,7 @@ namespace PatreonPlugin
 
         public static ItemType ParseItem(string Item)
         {
+
             switch (Item)
             {
                 case "None":
@@ -38,14 +39,14 @@ namespace PatreonPlugin
                     return ItemType.KeycardJanitor;
                 case "KeycardScientist":
                     return ItemType.KeycardScientist;
-                case "KeycardScientistMajor":
-                    return ItemType.KeycardScientistMajor;
+                case "KeycardResearchCoordinator":
+                    return ItemType.KeycardResearchCoordinator;
                 case "KeycardZoneManager":
                     return ItemType.KeycardZoneManager;
                 case "KeycardGuard":
                     return ItemType.KeycardGuard;
-                case "KeycardSeniorGuard":
-                    return ItemType.KeycardSeniorGuard;
+                case "KeycardNTFOfficer":
+                    return ItemType.KeycardNTFOfficer;
                 case "KeycardContainmentEngineer":
                     return ItemType.KeycardContainmentEngineer;
                 case "KeycardNTFLieutenant":
@@ -72,30 +73,30 @@ namespace PatreonPlugin
                     return ItemType.SCP500;
                 case "SCP207":
                     return ItemType.SCP207;
-                case "WeaponManagerTablet":
-                    return ItemType.WeaponManagerTablet;
+                case "Ammo12gauge":
+                    return ItemType.Ammo12gauge;
                 case "GunE11SR":
                     return ItemType.GunE11SR;
-                case "GunProject90":
-                    return ItemType.GunProject90;
-                case "Ammo556":
-                    return ItemType.Ammo556;
-                case "GunMP7":
-                    return ItemType.GunMP7;
+                case "GunCrossvec":
+                    return ItemType.GunCrossvec;
+                case "Ammo556x45":
+                    return ItemType.Ammo556x45;
+                case "GunFSP9":
+                    return ItemType.GunFSP9;
                 case "GunLogicer":
                     return ItemType.GunLogicer;
-                case "GrenadeFrag":
-                    return ItemType.GrenadeFrag;
+                case "GrenadeHE":
+                    return ItemType.GrenadeHE;
                 case "GrenadeFlash":
                     return ItemType.GrenadeFlash;
-                case "Disarmer":
-                    return ItemType.Disarmer;
-                case "Ammo762":
-                    return ItemType.Ammo762;
-                case "Ammo9mm":
-                    return ItemType.Ammo9mm;
-                case "GunUSP":
-                    return ItemType.GunUSP;
+                case "Ammo44cal":
+                    return ItemType.Ammo44cal;
+                case "Ammo762x39":
+                    return ItemType.Ammo762x39;
+                case "Ammo9x19":
+                    return ItemType.Ammo9x19;
+                case "GunCOM18":
+                    return ItemType.GunCOM18;
                 case "SCP018":
                     return ItemType.SCP018;
                 case "SCP268":
@@ -106,6 +107,18 @@ namespace PatreonPlugin
                     return ItemType.Painkillers;
                 case "Coin":
                     return ItemType.Coin;
+                case "ArmorLight":
+                    return ItemType.ArmorLight;
+                case "ArmorCombat":
+                    return ItemType.ArmorCombat;
+                case "ArmorHeavy":
+                    return ItemType.ArmorHeavy;
+                case "GunRevolver":
+                    return ItemType.GunRevolver;
+                case "GunAK":
+                    return ItemType.GunAK;
+                case "GunShotgun":
+                    return ItemType.GunShotgun;
                 default:
                     Log.Warn($"Unknown item ({Item}) passed to item parser. Returning none.");
                     return ItemType.None;
